@@ -1,19 +1,19 @@
-# db=__import__('db')
+def search(self, root, bookname):
+        if not root:
+            return False
+        if root.bookname.startswith(bookname):
+            self.searchNode(root,bookname,[])
+        elif bookname < root.val:
+            root.left = self.search(root.left, bookname)
+        elif bookname > root.val:
+            root.right = self.search(root.right, bookname)
+        else:
+            return root
 
-# db.cursor.execute("select * from a")
-
-# myresult = db.cursor.fetchall()
-
-# for i in myresult:
-# 	print(i)
-
-import bcrypt
-
-org='admin2'.encode('utf-8')
-tmp=bcrypt.hashpw(org,bcrypt.gensalt(12))
-print(tmp.decode())
-
-print(bcrypt.checkpw('user1'.encode('utf-8'),'$2b$12$TbHvUtoM1psc9LxbYDCc7OAgkAnMDioH.QXljlj9HgsIg42EnPVWS'.encode()))
-from datetime import datetime
-my_date = datetime.now()
-print(my_date)
+def searchNode(self,root,bookname, searchOutput):
+    if root==None:
+        return False
+    if root.bookname.startswith(bookname):
+        searchOutput.append(root)
+    self.searchNode(root.left,bookname,searchOutput)
+    self.searchNode(root.right,bookname,searchOutput)

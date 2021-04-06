@@ -11,21 +11,25 @@ class TreeNode(object):
 
 
 class AVL_Tree(object):
+    def __init__(self) -> None:
+        self.root = None
     def insert(self, root, bookname,count,price,active,description):
-
+        val=self.search(root,bookname)
+        if not val:
+            return self.insertFunction(root, bookname,count,price,active,description)
+    def insertFunction(self, root, bookname,count,price,active,description):
+        
         if not root:
             return TreeNode(bookname,count,price,active,description)
         elif bookname < root.bookname:
-            root.left = self.insert(root.left, bookname,count,price,active,description)
+            root.left = self.insertFunction(root.left, bookname,count,price,active,description)
         else:
-            root.right = self.insert(root.right, bookname,count,price,active,description)
+            root.right = self.insertFunction(root.right, bookname,count,price,active,description)
 
         root.height = 1 + max(self.getHeight(root.left),
                               self.getHeight(root.right))
 
         balance = self.getBalance(root)
-
-       
         if balance > 1 and bookname < root.left.bookname:
             return self.rightRotate(root)
 
@@ -39,11 +43,10 @@ class AVL_Tree(object):
         if balance < -1 and bookname < root.right.bookname:
             root.right = self.rightRotate(root.right)
             return self.leftRotate(root)
-
+        self.Inorder(root,[])
         return root
 
     def leftRotate(self, z):
-
         y = z.right
         T2 = y.left
 
@@ -54,11 +57,12 @@ class AVL_Tree(object):
                            self.getHeight(z.right))
         y.height = 1 + max(self.getHeight(y.left),
                            self.getHeight(y.right))
-
+        
         return y
 
     def rightRotate(self, z):
-
+        result=[]
+        self.Inorder(z,result)
         y = z.left
         T3 = y.right
 
@@ -69,7 +73,7 @@ class AVL_Tree(object):
                            self.getHeight(z.right))
         y.height = 1 + max(self.getHeight(y.left),
                            self.getHeight(y.right))
-
+        
         return y
 
     def getHeight(self, root):
@@ -88,7 +92,6 @@ class AVL_Tree(object):
 
         if not root:
             return
-
         self.Inorder(root.left,searchResult)
         searchResult.append((root.bookname,root.count,root.price,root.active,root.description))
         self.Inorder(root.right,searchResult)
@@ -148,14 +151,45 @@ class AVL_Tree(object):
         if root is None or root.left is None:
             return root
         return self.getMinValueNode(root.left)
+    def search(self, root, bookname):
+        if not root:
+            return False
+        elif bookname < root.bookname:
+            return self.search(root.left, bookname)
+        elif bookname > root.bookname:
+            return self.search(root.right, bookname)
+        else:
+            return True
+    def searchSubString(self, root, bookname):
+        if not root:
+            return []
+        if root.bookname.startswith(bookname):
+            searchOutput = []
+            self.searchNode(root,bookname,searchOutput)
+            return searchOutput
+        elif bookname < root.bookname:
+            return self.searchSubString(root.left, bookname)
+        elif bookname > root.bookname:
+            return self.searchSubString(root.right, bookname)
+        else:
+            return []
 
     def searchNode(self,root,bookname, searchOutput):
         if root==None:
-            return False
+            return None
         if root.bookname.startswith(bookname):
             searchOutput.append(root)
         self.searchNode(root.left,bookname,searchOutput)
         self.searchNode(root.right,bookname,searchOutput)
+    def specificSearch(self,root,bookname):
+        if root==None:
+            return None
+        if root.bookname == bookname:
+            return root
+        L = self.specificSearch(root.left,bookname)
+        if(L!=None):
+            return L
+        return self.specificSearch(root.right,bookname)
     
 
     def updateNode(self,root,bookname,count,price,active,description):
@@ -169,14 +203,14 @@ class AVL_Tree(object):
             return True
         return self.searchNode(root.left,bookname,count,price,active,description) or self.searchNode(root.right,bookname,count,price,active,description)
 
-# myTree = AVL_Tree()
-# root = None
+avl = AVL_Tree()
 # root = myTree.insert(root, "Harry Potter",10,200,1,"A book about wizards")
 # root = myTree.insert(root, "Prisoner",10,200,1,"A book about how a prisoner lives")
 # root = myTree.insert(root, "Beach",10,200,1,"Book on beaches")
 # root = myTree.insert(root, "Magic",10,200,1,"Spell book")
 # root = myTree.insert(root, "Haufmann",10,200,1,"Algorithm based")
 # root = myTree.insert(root, "Legend",10,200,1,"A nice book")
+
 
 # op = []
 # myTree.searchNode(root, "Har",op)
