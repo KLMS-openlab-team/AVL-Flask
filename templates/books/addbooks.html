@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Login | KLMS Library</title>
+	<title>Add books</title>
+
 </head>
+
 <body>
 	{% with messages = get_flashed_messages() %}
 	{% if messages %}
@@ -16,11 +19,13 @@
 	</ul>
 	{% endif %}
 	{% endwith %}
-	<h2>Login</h2>
-	<form action="http://localhost:5000/login" method="post">
-		<input type="text" name="username">
-		<input type="password" name="password">
+	<form action="http://localhost:5000/books/addbooks" method="POST">
+		<input type="text" name="bookname" placeholder="Book Name" required>
+		<input type="number" name="count" placeholder="Count" required>
+		<input type="price" name="price" placeholder="Price" required>
+		<input type="text" name="description" placeholder="Description" required>
 		<input type="submit" value="submit">
 	</form>
 </body>
+
 </html>

@@ -9,14 +9,24 @@
 </head>
 
 <body>
+	{% with messages = get_flashed_messages() %}
+	{% if messages %}
+	<ul class=flashes>
+		{% for message in messages %}
+		<li>{{ message }}</li>
+		{% endfor %}
+	</ul>
+	{% endif %}
+	{% endwith %}
 	<h2>Books</h2>
-	<a href="/addbooks"></a>
+	<a href="/books/addbooks">add books</a>
 	<table>
 		<tr>
 		<th>Name</th>
 		<th>Count</th>
 		<th>Price</th>
 		<th>Description</th>
+		<th>Actions</th>
 		</tr>
 
 		{%for book in books%}
@@ -25,6 +35,9 @@
 			<td>{{book[1]}}</td>
 			<td>{{book[2]}}</td>
 			<td>{{book[4]}}</td>
+			<td>
+				<a href="http://localhost:5000/books/deletebook/{{book[0]}}">delete</a>
+			</td>
 		</tr>
 		{%endfor%}
 	</table>
