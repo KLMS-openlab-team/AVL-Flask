@@ -4,7 +4,7 @@ import mysql.connector
 mydb = mysql.connector.connect(
   host="localhost",
   user="root",
-  password="1234567890",
+  password="12345678",
   database="avl_flask",
   autocommit=True
 )

@@ -1,10 +1,13 @@
+from re import search
 import flask
 from flask import render_template,request,abort,session,redirect,url_for
 from flask.helpers import flash
 from flask.signals import request_finished
 from jinja2.utils import select_autoescape
 import bcrypt
+from werkzeug.exceptions import PreconditionRequired
 db=__import__('db')
+avl_tree=__import__('avl_tree').avl
 
 
 app = flask.Flask(__name__)
@@ -62,5 +65,11 @@ def dashboard():
     else:
         return render_template('student_dashboard.html', username=username)
 
-
+try:
+    db.cursor.execute("select * from book where active=1")
+    queryresult = db.cursor.fetchall()
+    for i in queryresult:
+        avl_tree.root = avl_tree.insert(avl_tree.root,i[0],i[1],i[2],i[3],i[4])
+except Exception as e:
+    print('Error occured while retrieving books'.join(e))
 app.run()

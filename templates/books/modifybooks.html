@@ -26,11 +26,11 @@
 	</ul>
 	{% endif %}
 	{% endwith %}
-	<form action="http://localhost:5000/books/addbooks" method="POST">
-		<input type="text" name="bookname" placeholder="Book Name" required>
-		<input type="number" name="count" placeholder="Count" required>
-		<input type="price" name="price" placeholder="Price" required>
-		<input type="text" name="description" placeholder="Description" required>
+	<form action="http://localhost:5000/books/modifybooks/{{node.bookname}}" method="POST">
+		<input type="text" name="bookname" placeholder="Book Name" value={{node.bookname}} disabled required>
+		<input type="number" name="count" placeholder="Count" value={{node.count}} required>
+		<input type="price" name="price" placeholder="Price" value={{node.price}} required>
+		<input type="text" name="description" placeholder="Description" value={{node.description}} required>
 		<input type="submit" value="submit">
 	</form>
 	
