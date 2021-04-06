@@ -29,3 +29,13 @@ CREATE TABLE borrow(
 	foreign key (bookname) references book(bookname),
 	primary key(username,bookname,issuedatetime)
 );
+
+insert into user values('user1','user1','user','$2b$12$TbHvUtoM1psc9LxbYDCc7OAgkAnMDioH.QXljlj9HgsIg42EnPVWS',1);
+insert into user values('user2','user2','user','$2b$12$k1tSN8QDGUHZQPZWDL..c.Hbb8rkj3ad5YvgUtdcUbkNd3u2UAjfa',1);
+insert into user values('admin1','admin1','admin','$2b$12$ec292NUQEH3w9Ra6gObJDOlesvGDePRlEDFhFT3HGZVKHLB.70Tzu',1);
+insert into user values('admin2','admin2','admin','$2b$12$vK8AhPRNiwqhamoER7q4XuONR5AzBqS59Qgs4GkNXECYUTzuLbYAm',1);
+insert into book values('harrypotter-1',2,100,1,'good book');
+insert into book values('harrypotter-2',2,100,1,'good book');
+insert into book values('harrypotter-3',2,100,1,'good book');
+insert into borrow values('user1','harrypotter-1','2021-04-05 13:06:20.677224','2021-04-06 13:06:20.677224');
+insert into borrow values('user2','harrypotter-1','2021-04-05 13:06:20.677224',null);

@@ -1,9 +1,11 @@
+from re import search
 import flask
 from flask import render_template,request,abort,session,redirect,url_for
 from flask.signals import request_finished
 from jinja2.utils import select_autoescape
 import bcrypt
 db=__import__('db')
+avl_tree=__import__('avl_tree').AVL_Tree
 
 
 app = flask.Flask(__name__)
@@ -26,14 +28,17 @@ def managebooks():
     if 'username' not in session or 'role' not in session or session['role']!='admin':
         return redirect(url_for('index'))
     try:
+        avl = avl_tree()
+        root = None
         db.cursor.execute("select * from book where active=1")
         queryresult = db.cursor.fetchall()
+        for i in queryresult:
+            root = avl.insert(root,i[0],i[1],i[2],i[3],i[4])
+        searchResult = []
+        avl.Inorder(root,searchResult)
     except :
         return url_for('dashboard')
-    books=[]
-    for i in queryresult:
-        books.append(i)
-    return render_template('books/managebooks.html',books=books)
+    return render_template('books/managebooks.html',books=searchResult)
 
 
 @app.route('/login', methods=['POST'])
