@@ -10,10 +10,10 @@ db=__import__('db')
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 app.config['SECRET_KEY']='secret_key_of_sdf'
-books_component=__import__('books').books
-books_component=books_component
 login_page='index.html'
-app.register_blueprint(books_component, url_prefix='/books')
+app.register_blueprint(__import__('books').books, url_prefix='/books')
+app.register_blueprint(__import__('users').users, url_prefix='/users')
+app.register_blueprint(__import__('transaction').transaction, url_prefix='/transaction')
 
 @app.route('/', methods=['GET'])
 def index():
@@ -42,6 +42,7 @@ def login():
     session['username']=username
     session['name']=queryresult[0][1]
     session['role']=queryresult[0][2]
+    session['due']=queryresult[0][5]
     return redirect(url_for('dashboard'))
 
 @app.route('/logout', methods=['GET'])
@@ -61,5 +62,5 @@ def dashboard():
     else:
         return render_template('student_dashboard.html', username=username)
 
-        
+
 app.run()

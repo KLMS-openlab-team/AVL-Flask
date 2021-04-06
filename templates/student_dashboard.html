@@ -19,5 +19,9 @@
 	student dash
 	<a href="http://localhost:5000/logout">logout</a>
 	{{session['name']}}
+	<b> due: {{session['due']}}</b>
+
+	<a href="/transaction/borrowbook">borrow</a>
+	<a href="/transaction/returnbook">return</a>
 </body>
 </html>
