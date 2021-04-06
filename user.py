@@ -1,3 +1,5 @@
+# to be modified according to user
+
 from flask import Blueprint, render_template, abort, session, flash, request
 from flask.helpers import flash, url_for
 from werkzeug.exceptions import PreconditionFailed

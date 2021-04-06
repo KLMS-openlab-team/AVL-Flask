@@ -7,6 +7,15 @@
 	<title>Document</title>
 </head>
 <body>
+	{% with messages = get_flashed_messages() %}
+	{% if messages %}
+	<ul class=flashes>
+		{% for message in messages %}
+		<li>{{ message }}</li>
+		{% endfor %}
+	</ul>
+	{% endif %}
+	{% endwith %}
 	student dash
 	<a href="http://localhost:5000/logout">logout</a>
 	{{session['name']}}
