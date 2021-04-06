@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Modify User</title>
+</head>
+
+<body>
+	{% with messages = get_flashed_messages() %}
+	{% if messages %}
+	<ul class=flashes>
+		{% for message in messages %}
+		<li>{{ message }}</li>
+		{% endfor %}
+	</ul>
+	{% endif %}
+	{% endwith %}
+	<a href="/dashboard">Dashboard</a>
+	<h2>Modify User</h2>
+	<form action="http://localhost:5000/users/modifyuser/{{qr[0]}}" method="POST">
+		<input type="text" name="username" placeholder="Username" value="{{qr[0]}}" required disabled>
+		<input type="text" name="name" placeholder="Name" value="{{qr[1]}}" required>
+		<select name="role" id="role" value="{{qr[2]}}">
+			{% if qr[2]=='admin' %}
+			<option value="admin" selected>Admin</option>
+			<option value="user">User</option>
+			{% else %}
+			<option value="user" selected>User</option>
+			<option value="admin">Admin</option>
+			{% endif%}
+		</select>
+		<input type="text" name="due" value="{{qr[5]}}" placeholder="due" required>
+		<input type="submit" value="submit">
+	</form>
+
+</body>
+
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>manage users</title>
+</head>
+
+<body>
+	{% with messages = get_flashed_messages() %}
+	{% if messages %}
+	<ul class=flashes>
+		{% for message in messages %}
+		<li>{{ message }}</li>
+		{% endfor %}
+	</ul>
+	{% endif %}
+	{% endwith %}
+	<a href="/dashboard">Dashboard</a>
+	<h2>Users</h2>
+	<a href="/users/addusers">add users</a>
+	<table>
+		<tr>
+			<th>Username</th>
+			<th>Name</th>
+			<th>Role</th>
+			<th>Due</th>
+			<th>Actions</th>
+		</tr>
+
+		{%for user in users%}
+		<tr>
+			<td>{{user[0]}}</td>
+			<td>{{user[1]}}</td>
+			<td>{{user[2]}}</td>
+			<td>{{user[5]}}</td>
+			<td>
+				<a href="/users/deleteuser/{{user[0]}}">delete</a>
+				<a href="/users/modifyuser/{{user[0]}}">modify</a>
+			</td>
+		</tr>
+		{%endfor%}
+	</table>
+</body>
+
+</html>
