@@ -28,7 +28,7 @@
 			<th>Issue time</th>
 			<th>Actions</th>
 		</tr>
-		{% if len(books)==0 %}
+		{% if books|length==0 %}
 		<tr>
 			<td>No books to return</td>
 		</tr>
@@ -39,7 +39,7 @@
 			<td>{{book.issuedate}}</td>
 			<td>{{book.issuetime}}</td>
 			<td>
-				<a href="http://localhost:5000/transaction/borrow/{{book.bookname}}">return</a>
+				<a href="http://localhost:5000/transaction/return/{{book.bookname}}${{book.issuedatetime}}">return</a>
 			</td>
 		</tr>
 		{%endfor%}

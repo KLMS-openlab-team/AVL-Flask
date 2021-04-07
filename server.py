@@ -52,6 +52,8 @@ def login():
 def logout():
     session.pop('username',None)
     session.pop('role',None)
+    session.pop('name',None)
+    session.pop('due',None)
     return redirect(url_for('index'))
 
 @app.route('/dashboard', methods=['GET'])
