@@ -1,11 +1,14 @@
 import mysql.connector
+from configparser import ConfigParser
+config = ConfigParser()
 
 
+config.read('config.ini')
 mydb = mysql.connector.connect(
-  host="localhost",
-  user="root",
-  password="12345678",
-  database="avl_flask",
+  host=config.get('main','host'),
+  user=config.get('main','user'),
+  password=config.get('main','password'),
+  database=config.get('main','database'),
   autocommit=True
 )
 

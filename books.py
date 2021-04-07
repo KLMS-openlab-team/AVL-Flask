@@ -17,7 +17,7 @@ def managebooks():
     except :
         flash('Error occured while retrieving books')
         return redirect(url_for('dashboard'))
-    
+
     return render_template('books/managebooks.html',books=searchResult)
 
 @books.route('/addbooks',methods=['GET','POST'])

@@ -7,6 +7,48 @@
 	<title>Borrow Book</title>
 </head>
 <body>
-	Borrow book
+	{% with messages = get_flashed_messages() %}
+	{% if messages %}
+	<ul class=flashes>
+		{% for message in messages %}
+		<li>{{ message }}</li>
+		{% endfor %}
+	</ul>
+	{% endif %}
+	{% endwith %}
+
+	<a href="/dashboard">Dashboard</a>
+	<h2>Borrow Books</h2>
+	<form action="" id="searchform" method="get">
+		<input type="text" id="searchtext" name="search">
+		<input type="submit" value="submit">
+	</form>
+	<button onclick="clearsearch()">clear</button>
+	<table>
+		<tr>
+		<th>Name</th>
+		<th>Count</th>
+		<th>Price</th>
+		<th>Description</th>
+		<th>Actions</th>
+		</tr>
+
+		{%for book in books%}
+		<tr>
+			<td>{{book.bookname}}</td>
+			<td>{{book.count}}</td>
+			<td>{{book.price}}</td>
+			<td>{{book.description}}</td>
+			<td>
+				<a href="http://localhost:5000/transaction/borrow/{{book.bookname}}">borrow</a>
+			</td>
+		</tr>
+		{%endfor%}
+	</table>
+	<script>
+		function clearsearch(){
+			location.replace('/transaction/borrowbook')
+		}
+	</script>
 </body>
 </html>
