@@ -76,7 +76,6 @@ def returnborrow(bookissue):
         if len(reqparams)!=2:
             flash('Incorrect arguments to borrow book')
         else:
-            # update return_date, book count, due(in db and session)
             reqparams[1]=datetime.fromisoformat(reqparams[1])
             try:
 
@@ -92,7 +91,6 @@ def returnborrow(bookissue):
                 print(session['due'])
                 session['due']=int(session['due'])+extradue
                 print(session['due'])
-                # return redirect(url_for('transaction.returnbook'))
                 db.cursor.execute("update borrow set returndatetime='{}' where username like '{}' and issuedatetime like '{}' and bookname like '{}'".format(presentdate.isoformat(),session['username'],reqparams[1].isoformat(),reqparams[0]))
                 queryresult = db.cursor.fetchall()
                 db.cursor.execute("update user set due=due+{} where username like '{}'".format(extradue,session['username']))
@@ -106,5 +104,37 @@ def returnborrow(bookissue):
         return redirect(url_for('transaction.returnbook'))
 
 
+@transaction.route('/lost/<bookissue>', methods=['GET'])
+def lostborrow(bookissue):
+    if 'username' not in session:
+        return redirect(url_for('index'))
+    if request.method=='GET':
+        reqparams=bookissue.split('$')
+        if len(reqparams)!=2:
+            flash('Incorrect arguments to lost book')
+        else:
+            reqparams[1]=datetime.fromisoformat(reqparams[1])
+            try:
+                presentdate=datetime.now()
+                diff=presentdate-reqparams[1]
+                extradue=max(int(diff.days)-7,0)*2
+                print(extradue)
+                book=avl_tree.specificSearch(avl_tree.root,reqparams[0])
+                if book==None:
+                    flash('book not found. Contact admin!')
+                extradue+=book.price
+                print(book.count)
+                print(session['due'])
+                session['due']=int(session['due'])+extradue
+                print(session['due'])
+                db.cursor.execute("update borrow set returndatetime='{}' where username like '{}' and issuedatetime like '{}' and bookname like '{}'".format('lost',session['username'],reqparams[1].isoformat(),reqparams[0]))
+                queryresult = db.cursor.fetchall()
+                db.cursor.execute("update user set due=due+{} where username like '{}'".format(extradue,session['username']))
+                queryresult = db.cursor.fetchall()
 
-# lost book route- update return_date to "lost", change due
+            except Exception as e:
+                print(e)
+                flash('Error occured while reporting loss of book')
+                return redirect(url_for('dashboard'))
+            flash('Book loss reported successfully and price of book {} is added to your due'.format(reqparams[0]))
+        return redirect(url_for('transaction.returnbook'))

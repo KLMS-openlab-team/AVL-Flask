@@ -40,6 +40,7 @@
 			<td>{{book.issuetime}}</td>
 			<td>
 				<a href="http://localhost:5000/transaction/return/{{book.bookname}}${{book.issuedatetime}}">return</a>
+				<a href="http://localhost:5000/transaction/lost/{{book.bookname}}${{book.issuedatetime}}">lost</a>
 			</td>
 		</tr>
 		{%endfor%}
