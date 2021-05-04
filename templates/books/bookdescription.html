@@ -6,17 +6,20 @@
 <div ml-6 class="flex-1 flex items-center items-stretch justify-start">
 	<p class="text-white px-3 py-2 rounded-md text-lg font-medium">Library Management System</p>
 </div>
+<div class="text-white absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto">
+	<b>Due: {{session['due']}}</b>
+</div>
 <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto">
 	<a href="/dashboard" class="bg-blue-900 text-white px-3 py-2 rounded-md text-sm font-medium"
 		aria-current="page">{{session['name']}}'s Dashboard</a>
 </div>
 <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto">
-	<a href="/users/manageusers" class="bg-blue-900 text-white px-3 py-2 rounded-md text-sm font-medium"
-		aria-current="page">Manage Users</a>
+	<a href="/transaction/borrowbook" class="bg-blue-900 text-white px-3 py-2 rounded-md text-sm font-medium"
+		aria-current="page">Borrow</a>
 </div>
 <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto">
-	<a href="/books/managebooks" class="bg-blue-900 text-white px-3 py-2 rounded-md text-sm font-medium"
-		aria-current="page">Manage Books</a>
+	<a href="/transaction/returnbook" class="bg-blue-900 text-white px-3 py-2 rounded-md text-sm font-medium"
+		aria-current="page">Return</a>
 </div>
 <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto">
 	<a href="/logout" class="bg-blue-900 text-white px-3 py-2 rounded-md text-sm font-medium"
@@ -41,13 +44,22 @@
 {% endwith %}
 
 <div class="container justify-center mt-12">
-	<div class="bg-white p-4" style="box-shadow:  10px 7px 29px 10px;">
+	<div class="bg-white text-center p-4" style="box-shadow:  10px 7px 29px 10px;">
 		<h1 class="text-center text-5xl mb-4">{{bookname}}</h1>
-		Harry Potter is a series of seven fantasy novels written by British author, J. K. Rowling. The novels chronicle
-		the lives of a young wizard, Harry Potter, and his friends Hermione Granger and Ron Weasley, all of whom are
-		students at Hogwarts School of Witchcraft and Wizardry. The main story arc concerns Harry's struggle against
-		Lord Voldemort, a dark wizard who intends to become immortal, overthrow the wizard governing body known as the
-		Ministry of Magic and subjugate all wizards and Muggles (non-magical people).
+		{% if img %}
+		<div style="display: flex;">
+				<img class="block ml-auto mr-auto mb-5" src="{{img}}" alt="{{bookname}} image" >
+		</div>
+		{% endif %}
+		{% if txt.strip() | length ==0 %}
+		<b>
+			No information found while scraping web for the selected book
+		</b>
+		{% else %}
+		<div style="white-space: pre-wrap;">
+			{{txt}}
+		</div>
+		{% endif %}
 	</div>
 </div>
 {% endblock %}

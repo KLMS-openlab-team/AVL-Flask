@@ -8,6 +8,8 @@ import bcrypt
 from werkzeug.exceptions import PreconditionRequired
 db=__import__('db')
 avl_tree=__import__('avl_tree').avl
+scrapeinfofn=__import__('book_scrape').scrapeinfo
+avl_tree_info=__import__('avltree_scrape').avl_tree_info
 
 
 app = flask.Flask(__name__)
@@ -30,7 +32,8 @@ def asdfasdf():
 @app.route('/scrapeinfo/<bookname>', methods=['GET'])
 def scrapeinfo(bookname):
     print(bookname)
-    return render_template('books/bookdescription.html',bookname=bookname)
+    txt,img=scrapeinfofn(bookname)
+    return render_template('books/bookdescription.html',bookname=bookname,txt=txt.strip(),img=img)
 
 
 
@@ -72,9 +75,9 @@ def dashboard():
     username=session['username']
     role=session['role']
     if role=='admin':
-        return render_template('admin_dashboard.html', username=username)
+        return render_template('admin_dashboard.html', username=username,avl_tree_info=avl_tree_info)
     else:
-        return render_template('student_dashboard.html', username=username)
+        return render_template('student_dashboard.html', username=username,avl_tree_info=avl_tree_info)
 
 try:
     db.cursor.execute("select * from book where active=1")
