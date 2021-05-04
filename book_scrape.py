@@ -18,7 +18,6 @@ def scrapeinfo(book):
         img=d.find('img')
         link="http:"+img['src']
         images.append(link)
-        # print(images)
         name = list(d.find_all('p'))
         if len(name)>=3:
             par=name[2].get_text().replace('/n','')
@@ -29,9 +28,5 @@ def scrapeinfo(book):
             par2=name[3].get_text().replace('/n','')
             par2=re.sub(r'[/[0-9]*]','',par2)
             info.append(par2)
-
-    ans=''
-    for i in info:
-        print(i,'\n')
     ans='\n\n'.join(info)
     return ((ans,(None if len(images)==0 else images[0])))
