@@ -24,6 +24,11 @@ def index():
         return redirect(url_for('dashboard'))
     return render_template(login_page)
 
+@app.route('/asdfasdf', methods=['GET'])
+def asdfasdf():
+    return render_template('child.html')
+
+
 
 @app.route('/login', methods=['POST'])
 def login():
