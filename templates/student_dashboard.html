@@ -1,32 +1,94 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "layout.html" %}
 
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
-</head>
 
-<body>
-	{% with messages = get_flashed_messages() %}
-	{% if messages %}
+{% block navbar %}
+<div ml-6 class="flex-1 flex items-center items-stretch justify-start">
+	<p class="text-white px-3 py-2 rounded-md text-lg font-medium">Library Management System</p>
+</div>
+<div class="text-white absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto">
+	<b>Due: {{session['due']}}</b>
+</div>
+<div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto">
+	<a href="/dashboard" class="bg-blue-900 text-white px-3 py-2 rounded-md text-sm font-medium"
+		aria-current="page">{{session['name']}}'s Dashboard</a>
+</div>
+<div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto">
+	<a href="/transaction/borrowbook" class="bg-blue-900 text-white px-3 py-2 rounded-md text-sm font-medium"
+		aria-current="page">Borrow</a>
+</div>
+<div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto">
+	<a href="/transaction/returnbook" class="bg-blue-900 text-white px-3 py-2 rounded-md text-sm font-medium"
+		aria-current="page">Return</a>
+</div>
+<div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto">
+	<a href="/logout" class="bg-blue-900 text-white px-3 py-2 rounded-md text-sm font-medium"
+		aria-current="page">Logout</a>
+</div>
+{% endblock %}
+
+{% block fullbody %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
 	<ul class=flashes>
 		{% for message in messages %}
 		<li>{{ message }}</li>
 		{% endfor %}
 	</ul>
-	{% endif %}
-	{% endwith %}
-	student dash
-	<a href="http://localhost:5000/logout">logout</a>
-	{{session['name']}}
-	<b> due: {{session['due']}}</b>
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
 
-	<a href="/transaction/borrowbook">borrow</a>
-	<a href="/transaction/returnbook">return</a>
-	<style>
-	</style>
-</body>
 
-</html>
+{% endif %}
+{% endwith %}
+<div class="container justify-center mt-12">
+	<div class="bg-white p-4" style="box-shadow:  10px 7px 29px 10px;">
+		<h1 class="text-center text-5xl mb-4">AVL Tree's Application in Library Management</h1>
+		In computer science, an AVL tree (named after inventors Adelson-Velsky and Landis) is a self-balancing binary
+		search tree. It was the first such data structure to be invented. In an AVL tree, the heights of the two child
+		subtrees of any node differ by at most one; if at any time they differ by more than one, rebalancing is done to
+		restore this property. Lookup, insertion, and deletion all take O(log n) time in both the average and worst
+		cases, where n is the number of nodes in the tree prior to the operation. Insertions and deletions may require
+		the tree to be rebalanced by one or more tree rotations.
+		<br>
+		<br>
+		The AVL tree is named after its two Soviet inventors, Georgy Adelson-Velsky and Evgenii Landis, who published it
+		in their 1962 paper "An algorithm for the organization of information".
+		<br>
+		<br>
+
+		AVL trees are often compared with red–black trees because both support the same set of operations and take
+		O(logn) time for the basic operations. For lookup-intensive applications, AVL trees are faster than red–black
+		trees because they are more strictly balanced. Similar to red–black trees, AVL trees are height-balanced.
+		<br>
+		<br>
+
+		Balance factor:
+		In a binary tree the balance factor of a node X is defined to be the height difference
+
+		Balance Factor = (Height of Left Subtree - Height of Right Subtree) or (Height of Right Subtree - Height of Left
+		Subtree)
+
+		The self balancing property of an avl tree is maintained by the balance factor. The value of balance factor
+		should always be -1, 0 or +1.
+
+		<br>
+		<br>
+		Complexities of Different Operations on an AVL Tree:
+		<br>
+		Insertion:
+
+		O(log n)
+		<br>
+		Deletion:
+
+		O(log n)
+		<br>
+		Search:
+
+		O(log n)
+	</div>
+</div>
+{% endblock %}

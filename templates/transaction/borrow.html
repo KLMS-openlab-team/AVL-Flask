@@ -1,38 +1,75 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Borrow Book</title>
-</head>
-<body>
-	{% with messages = get_flashed_messages() %}
-	{% if messages %}
+{% extends "layout.html" %}
+
+
+
+{% block navbar %}
+<div ml-6 class="flex-1 flex items-center items-stretch justify-start">
+	<p class="text-white px-3 py-2 rounded-md text-lg font-medium">Library Management System</p>
+</div>
+<div class="text-white absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto">
+	<b>Due: {{session['due']}}</b>
+</div>
+<div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto">
+	<a href="/dashboard" class="bg-blue-900 text-white px-3 py-2 rounded-md text-sm font-medium"
+		aria-current="page">{{session['name']}}'s Dashboard</a>
+</div>
+<div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto">
+	<a href="/transaction/borrowbook" class="bg-blue-900 text-white px-3 py-2 rounded-md text-sm font-medium"
+		aria-current="page">Borrow</a>
+</div>
+<div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto">
+	<a href="/transaction/returnbook" class="bg-blue-900 text-white px-3 py-2 rounded-md text-sm font-medium"
+		aria-current="page">Return</a>
+</div>
+<div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto">
+	<a href="/logout" class="bg-blue-900 text-white px-3 py-2 rounded-md text-sm font-medium"
+		aria-current="page">Logout</a>
+</div>
+{% endblock %}
+
+
+
+{% block fullbody %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
 	<ul class=flashes>
 		{% for message in messages %}
 		<li>{{ message }}</li>
 		{% endfor %}
 	</ul>
-	{% endif %}
-	{% endwith %}
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+{% endif %}
+{% endwith %}
+<h1 class="text-white text-5xl text-center mb-3 mt-4">Borrow Books</h1>
+<div class="container">
 
-	<a href="/dashboard">Dashboard</a>
-	<h2>Borrow Books</h2>
-	<form action="" id="searchform" method="get">
-		<input type="text" id="searchtext" name="search">
-		<input type="submit" value="submit">
-	</form>
-	<button onclick="clearsearch()">clear</button>
-	<table>
+
+	<div class="mb-4 text-center justify-center">
+		<form action="" id="searchform" method="get" class="inline mx-auto justify-center text-center" >
+			<input type="text" class="form-control" id="searchtext" style="width: 300px;margin-left:auto;margin-right: auto;"    name="search">
+			<input type="submit" value="submit" class="btn btn-primary mt-2">
+		</form>
+		<button onclick="clearsearch()" class="btn btn-light mt-2 ml-3">clear</button>
+	</div>
+	<table class="table table-striped bg-white">
+		<thead class="thead-dark">
+
+			<th>Name</th>
+			<th>Count</th>
+			<th>Price</th>
+			<th>Description</th>
+			<th>Actions</th>
+		</thead>
+
+		{% if books|length==0 %}
 		<tr>
-		<th>Name</th>
-		<th>Count</th>
-		<th>Price</th>
-		<th>Description</th>
-		<th>Actions</th>
+			<td colspan="5" class="text-center">No books to borrow</td>
 		</tr>
-
+		{% endif %}
 		{%for book in books%}
 		<tr>
 			<td>{{book.bookname}}</td>
@@ -40,15 +77,17 @@
 			<td>{{book.price}}</td>
 			<td>{{book.description}}</td>
 			<td>
-				<a href="http://localhost:5000/transaction/borrow/{{book.bookname}}">borrow</a>
+				<a href="http://localhost:5000/transaction/borrow/{{book.bookname}}" class="btn btn-primary">Borrow</a>
+				<a href="http://localhost:5000/scrapeinfo/{{book.bookname}}" class="btn btn-success">Learn More-></a>
 			</td>
 		</tr>
 		{%endfor%}
 	</table>
+
 	<script>
-		function clearsearch(){
+		function clearsearch() {
 			location.replace('/transaction/borrowbook')
 		}
 	</script>
-</body>
-</html>
+</div>
+{% endblock %}

@@ -24,9 +24,13 @@ def index():
         return redirect(url_for('dashboard'))
     return render_template(login_page)
 
-@app.route('/asdfasdf', methods=['GET'])
+@app.route('/testurl', methods=['GET'])
 def asdfasdf():
     return render_template('child.html')
+@app.route('/scrapeinfo/<bookname>', methods=['GET'])
+def scrapeinfo(bookname):
+    print(bookname)
+    return render_template('books/bookdescription.html',bookname=bookname)
 
 
 

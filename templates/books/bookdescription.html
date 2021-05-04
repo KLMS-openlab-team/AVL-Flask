@@ -39,33 +39,15 @@
 </div>
 {% endif %}
 {% endwith %}
-<h1 class="text-white text-5xl text-center mb-3 mt-4">Manage Users</h1>
-<div class="text-center justify-center mb-4">
-	<a href="/users/addusers" class="btn btn-dark">Add Users</a>
-</div>
-<div class="container">
 
-	<table class="table table-striped bg-white">
-		<thead class="thead-dark">
-			<th>Username</th>
-			<th>Name</th>
-			<th>Role</th>
-			<th>Due</th>
-			<th>Actions</th>
-		</thead>
-
-		{%for user in users%}
-		<tr>
-			<td>{{user[0]}}</td>
-			<td>{{user[1]}}</td>
-			<td>{{user[2]}}</td>
-			<td>{{user[5]}}</td>
-			<td>
-				<a href="/users/deleteuser/{{user[0]}}" class="btn btn-danger">delete</a>
-				<a href="/users/modifyuser/{{user[0]}}" class="btn btn-primary">modify</a>
-			</td>
-		</tr>
-		{%endfor%}
-	</table>
+<div class="container justify-center mt-12">
+	<div class="bg-white p-4" style="box-shadow:  10px 7px 29px 10px;">
+		<h1 class="text-center text-5xl mb-4">{{bookname}}</h1>
+		Harry Potter is a series of seven fantasy novels written by British author, J. K. Rowling. The novels chronicle
+		the lives of a young wizard, Harry Potter, and his friends Hermione Granger and Ron Weasley, all of whom are
+		students at Hogwarts School of Witchcraft and Wizardry. The main story arc concerns Harry's struggle against
+		Lord Voldemort, a dark wizard who intends to become immortal, overthrow the wizard governing body known as the
+		Ministry of Magic and subjugate all wizards and Muggles (non-magical people).
+	</div>
 </div>
 {% endblock %}

@@ -1,8 +1,8 @@
 class TreeNode(object):
     def __init__(self, bookname,count,price,active,description):
         self.bookname = bookname
-        self.count = count
-        self.price = price
+        self.count = int(count)
+        self.price = int(price)
         self.active = active
         self.description = description
         self.left = None
@@ -195,13 +195,13 @@ class AVL_Tree(object):
         if root==None:
             return False
         if root.bookname==bookname:
-            root.count=count
-            root.price=price
+            root.count=int(count)
+            root.price=int(price)
             root.active=active
             root.description=description
             return True
         return self.searchNode(root.left,bookname,count,price,active,description) or self.searchNode(root.right,bookname,count,price,active,description)
-        
+
 
 avl = AVL_Tree()
 # root = myTree.insert(root, "Harry Potter",10,200,1,"A book about wizards")

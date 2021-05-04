@@ -1,48 +1,113 @@
 {% extends "layout.html" %}
 
 
+
 {% block navbar %}
-<div ml-6 class="flex-1 flex items-center justify-center items-stretch justify-start">
+<div ml-6 class="flex-1 flex items-center items-stretch justify-start">
 	<p class="text-white px-3 py-2 rounded-md text-lg font-medium">Library Management System</p>
+</div>
+<div class="text-white absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto">
+	<b>Due: {{session['due']}}</b>
+</div>
+<div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto">
+	<a href="/dashboard" class="bg-blue-900 text-white px-3 py-2 rounded-md text-sm font-medium"
+		aria-current="page">{{session['name']}}'s Dashboard</a>
+</div>
+<div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto">
+	<a href="/transaction/borrowbook" class="bg-blue-900 text-white px-3 py-2 rounded-md text-sm font-medium"
+		aria-current="page">Borrow</a>
+</div>
+<div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto">
+	<a href="/transaction/returnbook" class="bg-blue-900 text-white px-3 py-2 rounded-md text-sm font-medium"
+		aria-current="page">Return</a>
+</div>
+<div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto">
+	<a href="/logout" class="bg-blue-900 text-white px-3 py-2 rounded-md text-sm font-medium"
+		aria-current="page">Logout</a>
 </div>
 {% endblock %}
 
+
+
 {% block fullbody %}
-<div class="container mx-auto p-2">
-	<div class="max-w-sm mx-auto my-24 bg-white px-5 py-10 rounded shadow-xl">
-		<div class="text-center mb-8">
-			{% with messages = get_flashed_messages() %}
-			{% if messages %}
-			<div class="alert alert-warning alert-dismissible fade show" role="alert">
-				<ul class=flashes>
-					{% for message in messages %}
-					<li>{{ message }}</li>
-					{% endfor %}
-				</ul>
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			{% endif %}
-			{% endwith %}
-			<h1 class="font-bold text-2xl font-bold">Login to access library</h1>
-		</div>
-		<form action="http://localhost:5000/login" method="post">
-			<div class="mt-5">
-				<label for="username">Username</label>
-				<input type="text" name="username" id="username"
-					class="block w-full p-2 border rounded border-gray-500" />
-			</div>
-			<div class="mt-5">
-				<label for="password">Password</label>
-				<input type="password" name="password" id="password"
-					class="block w-full p-2 border rounded border-gray-500" />
-			</div>
-			<div class="mt-10">
-				<input type="submit" value="submit"
-					class="py-3 bg-green-500 hover:bg-green-600 rounded text-white text-center w-full" />
-			</div>
-		</form>
-	</div>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+	<ul class=flashes>
+		{% for message in messages %}
+		<li>{{ message }}</li>
+		{% endfor %}
+	</ul>
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+{% endif %}
+{% endwith %}
+<h1 class="text-white text-5xl text-center mb-3 mt-4">Borrow Books</h1>
+<div class="container">
+
+
+	<form action="" id="searchform" method="get">
+		<input type="text" id="searchtext" name="search">
+		<input type="submit" value="submit">
+	</form>
+	<button onclick="clearsearch()">clear</button>
+	<table class="table table-striped bg-white">
+		<thead class="thead-dark">
+
+			<th>Name</th>
+			<th>Count</th>
+			<th>Price</th>
+			<th>Description</th>
+			<th>Actions</th>
+		</thead>
+
+		{% if books|length==0 %}
+		<tr>
+			<td>No books to borrow</td>
+		</tr>
+		{% endif %}
+		{%for book in books%}
+		<tr>
+			<td>{{book.bookname}}</td>
+			<td>{{book.count}}</td>
+			<td>{{book.price}}</td>
+			<td>{{book.description}}</td>
+			<td>
+				<a href="http://localhost:5000/transaction/borrow/{{book.bookname}}" class="btn btn-primary">borrow</a>
+			</td>
+		</tr>
+		{%endfor%}
+	</table>
+
+	<script>
+		function clearsearch(){
+			location.replace('/transaction/borrowbook')
+		}
+	</script>
 </div>
 {% endblock %}
+
+
+
+
+	<h2>Borrow Books</h2>
+	<table>
+		<tr>
+		</tr>
+
+		{%for book in books%}
+		<tr>
+			<td>{{book.bookname}}</td>
+			<td>{{book.count}}</td>
+			<td>{{book.price}}</td>
+			<td>{{book.description}}</td>
+			<td>
+				<a href="http://localhost:5000/transaction/borrow/{{book.bookname}}" class="btn btn-primary">borrow</a>
+			</td>
+		</tr>
+		{%endfor%}
+	</table>
+</body>
+</html>

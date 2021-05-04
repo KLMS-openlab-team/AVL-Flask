@@ -1,41 +1,86 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "layout.html" %}
 
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Modify User</title>
-</head>
+{% block navbar %}
 
-<body>
-	{% with messages = get_flashed_messages() %}
-	{% if messages %}
-	<ul class=flashes>
-		{% for message in messages %}
-		<li>{{ message }}</li>
-		{% endfor %}
-	</ul>
-	{% endif %}
-	{% endwith %}
-	<a href="/dashboard">Dashboard</a>
-	<h2>Modify User</h2>
-	<form action="http://localhost:5000/users/modifyuser/{{qr[0]}}" method="POST">
-		<input type="text" name="username" placeholder="Username" value="{{qr[0]}}" required disabled>
-		<input type="text" name="name" placeholder="Name" value="{{qr[1]}}" required>
-		<select name="role" id="role" value="{{qr[2]}}">
-			{% if qr[2]=='admin' %}
-			<option value="admin" selected>Admin</option>
-			<option value="user">User</option>
-			{% else %}
-			<option value="user" selected>User</option>
-			<option value="admin">Admin</option>
-			{% endif%}
-		</select>
-		<input type="text" name="due" value="{{qr[5]}}" placeholder="due" required>
-		<input type="submit" value="submit">
-	</form>
+<div ml-6 class="flex-1 flex items-center items-stretch justify-start">
+	<p class="text-white px-3 py-2 rounded-md text-lg font-medium">Library Management System</p>
+</div>
+<div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto">
+	<a href="/dashboard" class="bg-blue-900 text-white px-3 py-2 rounded-md text-sm font-medium"
+		aria-current="page">{{session['name']}}'s Dashboard</a>
+</div>
+<div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto">
+	<a href="/users/manageusers" class="bg-blue-900 text-white px-3 py-2 rounded-md text-sm font-medium"
+		aria-current="page">Manage Users</a>
+</div>
+<div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto">
+	<a href="/books/managebooks" class="bg-blue-900 text-white px-3 py-2 rounded-md text-sm font-medium"
+		aria-current="page">Manage Books</a>
+</div>
+<div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto">
+	<a href="/logout" class="bg-blue-900 text-white px-3 py-2 rounded-md text-sm font-medium"
+		aria-current="page">Logout</a>
+</div>
+{% endblock %}
 
-</body>
+{% block fullbody %}
+<div class="container mx-auto p-2">
+	<div class="max-w-sm mx-auto my-24 bg-white px-5 py-10 rounded shadow-xl">
+		<div class="text-center mb-8">
+			{% with messages = get_flashed_messages() %}
+			{% if messages %}
+			<div class="alert alert-warning alert-dismissible fade show" role="alert">
+				<ul class=flashes>
+					{% for message in messages %}
+					<li>{{ message }}</li>
+					{% endfor %}
+				</ul>
 
-</html>
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			{% endif %}
+			{% endwith %}
+			<h1 class="font-bold text-2xl font-bold">Modify User</h1>
+		</div>
+		<form action="http://localhost:5000/users/modifyuser/{{qr[0]}}" method="post">
+			<div class="mt-2">
+				<label for="username">Username</label>
+				<input type="text" name="username" id="username" class="block w-full p-2 border rounded border-gray-500"
+					value="{{qr[0]}}" required disabled />
+			</div>
+			<div class="mt-2">
+				<label for="name">Name</label>
+				<input type="text" name="name" id="name" class="block w-full p-2 border rounded border-gray-500"
+					value="{{qr[1]}}" required />
+			</div>
+			<div class="mt-2">
+				Role:
+				<select name="role" id="role" value="{{qr[2]}}">
+					{% if qr[2]=='admin' %}
+					<option value="admin" selected>Admin</option>
+					<option value="user">User</option>
+					{% else %}
+					<option value="user" selected>User</option>
+					<option value="admin">Admin</option>
+					{% endif%}
+				</select>
+			</div>
+
+			<div class="mt-2">
+				<label for="due">Due</label>
+				<input type="number" name="due" id="due" value="{{qr[5]}}"
+					class="block w-full p-2 border rounded border-gray-500" required />
+			</div>
+			<div class="mt-10">
+				<input type="submit" value="submit"
+					class="py-3 bg-green-500 hover:bg-green-600 rounded text-white text-center w-full" />
+			</div>
+		</form>
+	</div>
+</div>
+
+
+
+{% endblock %}
