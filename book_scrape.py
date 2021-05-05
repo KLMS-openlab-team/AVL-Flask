@@ -14,7 +14,6 @@ def scrapeinfo(book):
     soup = BeautifulSoup(content,'html.parser')
     job_elems = soup.find_all('div', class_='mw-parser-output')
     for d in job_elems:
-
         img=d.find('img')
         link="http:"+img['src']
         images.append(link)
