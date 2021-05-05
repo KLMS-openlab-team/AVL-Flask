@@ -10,6 +10,7 @@ db=__import__('db')
 avl_tree=__import__('avl_tree').avl
 scrapeinfofn=__import__('book_scrape').scrapeinfo
 avl_tree_info=__import__('avltree_scrape').avl_tree_info
+avl_tree_imglink=__import__('avltree_scrape').avl_tree_imglink
 
 
 app = flask.Flask(__name__)
@@ -75,9 +76,9 @@ def dashboard():
     username=session['username']
     role=session['role']
     if role=='admin':
-        return render_template('admin_dashboard.html', username=username,avl_tree_info=avl_tree_info)
+        return render_template('admin_dashboard.html', username=username,avl_tree_info=avl_tree_info,avl_tree_imglink=avl_tree_imglink)
     else:
-        return render_template('student_dashboard.html', username=username,avl_tree_info=avl_tree_info)
+        return render_template('student_dashboard.html', username=username,avl_tree_info=avl_tree_info,avl_tree_imglink=avl_tree_imglink)
 
 try:
     db.cursor.execute("select * from book where active=1")

@@ -29,6 +29,9 @@ page = requests.get(URL)
 content = page.content
 soup = BeautifulSoup(content,'html.parser')
 job_elems = soup.find_all('div', class_='content')
+imgs=soup.find_all('img')
+if len(imgs)>=4:
+    link="http:"+imgs[3]['src']
 for d in job_elems:
     p=list(d.find_all('p'))
     info.append(p[3].get_text())
@@ -47,3 +50,4 @@ for d in job_elems:
 # for i in info:
 #     print(i)
 avl_tree_info=('\n\n'.join(info)).strip()
+avl_tree_imglink=link

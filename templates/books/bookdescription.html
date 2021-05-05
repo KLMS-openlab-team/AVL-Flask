@@ -3,6 +3,29 @@
 
 
 {% block navbar %}
+
+{% if session['role']=='admin' %}
+
+<div ml-6 class="flex-1 flex items-center items-stretch justify-start">
+	<p class="text-white px-3 py-2 rounded-md text-lg font-medium">Library Management System</p>
+</div>
+<div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto">
+	<a href="/dashboard" class="bg-blue-900 text-white px-3 py-2 rounded-md text-sm font-medium"
+		aria-current="page">{{session['name']}}'s Dashboard</a>
+</div>
+<div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto">
+	<a href="/users/manageusers" class="bg-blue-900 text-white px-3 py-2 rounded-md text-sm font-medium"
+		aria-current="page">Manage Users</a>
+</div>
+<div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto">
+	<a href="/books/managebooks" class="bg-blue-900 text-white px-3 py-2 rounded-md text-sm font-medium"
+		aria-current="page">Manage Books</a>
+</div>
+<div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto">
+	<a href="/logout" class="bg-blue-900 text-white px-3 py-2 rounded-md text-sm font-medium"
+		aria-current="page">Logout</a>
+</div>
+{% else %}
 <div ml-6 class="flex-1 flex items-center items-stretch justify-start">
 	<p class="text-white px-3 py-2 rounded-md text-lg font-medium">Library Management System</p>
 </div>
@@ -25,6 +48,7 @@
 	<a href="/logout" class="bg-blue-900 text-white px-3 py-2 rounded-md text-sm font-medium"
 		aria-current="page">Logout</a>
 </div>
+{% endif %}
 {% endblock %}
 
 {% block fullbody %}

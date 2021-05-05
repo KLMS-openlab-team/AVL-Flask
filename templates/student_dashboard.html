@@ -44,11 +44,12 @@
 {% endif %}
 {% endwith %}
 <div class="container justify-center mt-12">
-	<div class="bg-white p-4" style="box-shadow:  10px 7px 29px 10px;">
-		<h1 class="text-center text-5xl mb-4">AVL Tree's Application in Library Management</h1>
-		<span style="white-space: pre-wrap;">
-			{{avl_tree_info}}
-		</span>
+	<div class="bg-white p-4" style="box-shadow:  10px 7px 29px 10px;white-space: pre-wrap;">
+		<p class="font-bold text-xl">AVL Tree's Application in Library Management:</p>
+		In a traditional Library Management System, the updating, reading and deleting operations on books will take order of N time. Using AVL trees, we can reduce the time complexities for the above operations to order of log(N), which will be a lot faster in case of handling enormous data.
+		<p class="font-bold text-lg">To learn more about working of AVL trees refer the text below (scraped from web):</p>
+		<img style="margin-left:auto;margin-right:auto;height:300px" src="{{avl_tree_imglink}}" alt="picture of avl tree">
+		{{avl_tree_info}}
 	</div>
 </div>
 {% endblock %}
